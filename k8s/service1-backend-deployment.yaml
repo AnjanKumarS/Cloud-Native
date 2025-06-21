@@ -14,8 +14,7 @@ spec:
     spec:
       containers:
         - name: service1-backend
-          image: service1-backend-image:latest
-          imagePullPolicy: Never
+          image: your-dockerhub-username/service1-backend:latest
           ports:
             - containerPort: 5001
 ---

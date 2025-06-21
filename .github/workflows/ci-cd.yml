@@ -1,11 +1,11 @@
-name: CI/CD Pipeline for Service1
+name: CI/CD Pipeline for Microservices
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  build-and-deploy:
+  build-and-push:
     runs-on: ubuntu-latest
 
     env:
@@ -29,14 +29,38 @@ jobs:
         docker build -t $REGISTRY/$IMAGE_PREFIX/service1-frontend:latest ./frontend/service1-frontend
         docker push $REGISTRY/$IMAGE_PREFIX/service1-frontend:latest
 
-    - name: Set up kubectl
-      uses: azure/setup-kubectl@v3
-      with:
-        version: 'v1.32.2'
-
-    - name: Deploy to Kubernetes
+    - name: Build & Push service2-backend
       run: |
-        echo "${{ secrets.KUBECONFIG }}" > kubeconfig.yaml
-        export KUBECONFIG=kubeconfig.yaml
-        kubectl apply --validate=false -f k8s/service1-backend-deployment.yaml
-        kubectl apply --validate=false -f k8s/service1-frontend-deployment.yaml
+        docker build -t $REGISTRY/$IMAGE_PREFIX/service2-backend:latest ./backend/service2-backend
+        docker push $REGISTRY/$IMAGE_PREFIX/service2-backend:latest
+
+    - name: Build & Push service2-frontend
+      run: |
+        docker build -t $REGISTRY/$IMAGE_PREFIX/service2-frontend:latest ./frontend/service2-frontend
+        docker push $REGISTRY/$IMAGE_PREFIX/service2-frontend:latest
+
+    - name: Build & Push service3-backend
+      run: |
+        docker build -t $REGISTRY/$IMAGE_PREFIX/service3-backend:latest ./backend/service3-backend
+        docker push $REGISTRY/$IMAGE_PREFIX/service3-backend:latest
+
+    - name: Build & Push service3-frontend
+      run: |
+        docker build -t $REGISTRY/$IMAGE_PREFIX/service3-frontend:latest ./frontend/service3-frontend
+        docker push $REGISTRY/$IMAGE_PREFIX/service3-frontend:latest
+
+    - name: Build & Push service4-backend
+      run: |
+        docker build -t $REGISTRY/$IMAGE_PREFIX/service4-backend:latest ./backend/service4-backend
+        docker push $REGISTRY/$IMAGE_PREFIX/service4-backend:latest
+
+    - name: Build & Push service4-frontend
+      run: |
+        docker build -t $REGISTRY/$IMAGE_PREFIX/service4-frontend:latest ./frontend/service4-frontend
+        docker push $REGISTRY/$IMAGE_PREFIX/service4-frontend:latest
+
+    - name: Success Message
+      run: |
+        echo "✅ All Docker images built and pushed successfully!"
+        echo "📦 Images available at: $REGISTRY/$IMAGE_PREFIX/"
+        echo "🔧 To deploy locally, run: kubectl apply -f k8s/"

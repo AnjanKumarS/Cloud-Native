@@ -14,8 +14,7 @@ spec:
     spec:
       containers:
         - name: service1-frontend
-          image: service1-frontend-image:latest
-          imagePullPolicy: Never
+          image: your-dockerhub-username/service1-frontend:latest
           ports:
             - containerPort: 80
 ---
