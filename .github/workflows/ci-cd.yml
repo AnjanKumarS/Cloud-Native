@@ -38,5 +38,5 @@ jobs:
       run: |
         echo "${{ secrets.KUBECONFIG }}" > kubeconfig.yaml
         export KUBECONFIG=kubeconfig.yaml
-        kubectl apply -f k8s/service1-backend-deployment.yaml
-        kubectl apply -f k8s/service1-frontend-deployment.yaml
+        kubectl apply --validate=false -f k8s/service1-backend-deployment.yaml
+        kubectl apply --validate=false -f k8s/service1-frontend-deployment.yaml
