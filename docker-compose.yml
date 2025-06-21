@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  service1-frontend:
+    build: ./frontend/service1-frontend
+    ports:
+      - "8081:80"
+
+  service2-frontend:
+    build: ./frontend/service2-frontend
+    ports:
+      - "8082:80"
+
+  service3-frontend:
+    build: ./frontend/service3-frontend
+    ports:
+      - "8083:80"
+
+  service4-frontend:
+    build: ./frontend/service4-frontend
+    ports:
+      - "8084:80"
+
+  service1-backend:
+    build: ./backend/service1-backend
+    ports:
+      - "5001:5001"
+
+  service2-backend:
+    build: ./backend/service2-backend
+    ports:
+      - "5002:5002"
+
+  service3-backend:
+    build: ./backend/service3-backend
+    ports:
+      - "5003:5003"
+
+  service4-backend:
+    build: ./backend/service4-backend
+    ports:
+      - "5004:5004"
