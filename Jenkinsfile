@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        // Docker image tags can be customized
         BACKEND_SERVICES = "service1-backend service2-backend service3-backend service4-backend"
         FRONTEND_SERVICES = "service1-frontend service2-frontend service3-frontend service4-frontend"
     }
@@ -18,7 +17,7 @@ pipeline {
             steps {
                 dir('backend') {
                     script {
-                        BACKEND_SERVICES.split().each { svc ->
+                        BACKEND_SERVICES.split(" ").each { svc ->
                             sh "docker build -t ${svc}-image:latest ${svc}"
                         }
                     }
@@ -30,7 +29,7 @@ pipeline {
             steps {
                 dir('frontend') {
                     script {
-                        FRONTEND_SERVICES.split().each { svc ->
+                        FRONTEND_SERVICES.split(" ").each { svc ->
                             sh "docker build -t ${svc}-image:latest ${svc}"
                         }
                     }
