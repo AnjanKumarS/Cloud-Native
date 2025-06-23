@@ -13,6 +13,12 @@ pipeline {
             }
         }
 
+         stage('Test Kubectl') {
+            steps {
+                sh 'kubectl version --client'
+            }
+        }
+
         stage('Build Backend Docker Images') {
             steps {
                 dir('backend') {
